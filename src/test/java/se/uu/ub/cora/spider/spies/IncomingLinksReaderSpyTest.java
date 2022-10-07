@@ -25,8 +25,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import se.uu.ub.cora.data.DataList;
-import se.uu.ub.cora.spider.spies.IncomingLinksReaderSpy;
-import se.uu.ub.cora.testspies.data.DataListSpy;
+import se.uu.ub.cora.data.spies.DataListSpy;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 import se.uu.ub.cora.testutils.spies.MCRSpy;

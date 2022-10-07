@@ -26,18 +26,6 @@ import org.testng.annotations.Test;
 
 import se.uu.ub.cora.spider.record.IncomingLinksReader;
 import se.uu.ub.cora.spider.record.RecordListReader;
-import se.uu.ub.cora.spider.spies.DownloaderSpy;
-import se.uu.ub.cora.spider.spies.IncomingLinksReaderSpy;
-import se.uu.ub.cora.spider.spies.RecordCreatorSpy;
-import se.uu.ub.cora.spider.spies.RecordDeleterSpy;
-import se.uu.ub.cora.spider.spies.RecordListIndexerSpy;
-import se.uu.ub.cora.spider.spies.RecordListReaderSpy;
-import se.uu.ub.cora.spider.spies.RecordReaderSpy;
-import se.uu.ub.cora.spider.spies.RecordSearcherSpy;
-import se.uu.ub.cora.spider.spies.RecordUpdaterSpy;
-import se.uu.ub.cora.spider.spies.RecordValidatorSpy;
-import se.uu.ub.cora.spider.spies.SpiderInstanceFactorySpy;
-import se.uu.ub.cora.spider.spies.UploaderSpy;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 import se.uu.ub.cora.testutils.spies.MCRSpy;

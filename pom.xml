@@ -11,21 +11,22 @@
 	<packaging>jar</packaging>
 
 	<name>spider-spies</name>
-	
+
 	<properties>
+		<spider.version>7.3-SNAPSHOT</spider.version>
 		<logger.version>2.5.0</logger.version>
 		<coradata.version>7.2-SNAPSHOT</coradata.version>
+		<coradata-spies.version>1.0-SNAPSHOT</coradata-spies.version>
 		<json.version>3.3.0</json.version>
-		<spider.version>7.3-SNAPSHOT</spider.version>
-		<testutils.version>1.5.0</testutils.version>
-		<beefeater.version>3.7.0</beefeater.version>
 		<storage.version>7.0-SNAPSHOT</storage.version>
-		<search.version>4.4.0</search.version>
-		<bookkeeper.version>7.0.0</bookkeeper.version>
-		<httphandler.version>2.6.0</httphandler.version>
+		<search.version>5.0-SNAPSHOT</search.version>
+		<bookkeeper.version>8.0-SNAPSHOT</bookkeeper.version>
+		<beefeater.version>3.7.0</beefeater.version>
+		<initialize.version>1.0-SNAPSHOT</initialize.version>
+		<testutils.version>1.5.0</testutils.version>
 		<testutils-spies.version>1.0-SNAPSHOT</testutils-spies.version>
 	</properties>
-	
+
 	<scm>
 		<connection>scm:git:https://github.com/lsu-ub-uu/cora-spider-spies.git</connection>
 		<developerConnection>scm:git:https://github.com/lsu-ub-uu/cora-spider-spies.git</developerConnection>
@@ -34,6 +35,13 @@
 	</scm>
 
 	<dependencies>
+		<dependency>
+			<groupId>se.uu.ub.cora</groupId>
+			<artifactId>spider</artifactId>
+			<version>${spider.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
 		<dependency>
 			<groupId>se.uu.ub.cora</groupId>
 			<artifactId>logger</artifactId>
@@ -48,27 +56,20 @@
 		</dependency>
 		<dependency>
 			<groupId>se.uu.ub.cora</groupId>
+			<artifactId>coradata-spies</artifactId>
+			<version>${coradata-spies.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>se.uu.ub.cora</groupId>
 			<artifactId>json</artifactId>
 			<version>${json.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>se.uu.ub.cora</groupId>
-			<artifactId>spider</artifactId>
-			<version>${spider.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>se.uu.ub.cora</groupId>
-			<artifactId>beefeater</artifactId>
-			<version>${beefeater.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>se.uu.ub.cora</groupId>
 			<artifactId>storage</artifactId>
 			<version>${storage.version}</version>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>se.uu.ub.cora</groupId>
@@ -83,22 +84,28 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-            <groupId>se.uu.ub.cora</groupId>
-            <artifactId>httphandler</artifactId>
-            <version>${httphandler.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
 			<groupId>se.uu.ub.cora</groupId>
-			<artifactId>testutils-spies</artifactId>
-			<version>${testutils-spies.version}</version>
-			<scope>test</scope>
+			<artifactId>beefeater</artifactId>
+			<version>${beefeater.version}</version>
+			<scope>provided</scope>
 		</dependency>
-        
+				<dependency>
+			<groupId>se.uu.ub.cora</groupId>
+			<artifactId>initialize</artifactId>
+			<version>${initialize.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>se.uu.ub.cora</groupId>
 			<artifactId>testutils</artifactId>
 			<version>${testutils.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>se.uu.ub.cora</groupId>
+			<artifactId>testutils-spies</artifactId>
+			<version>${testutils-spies.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.testng</groupId>
