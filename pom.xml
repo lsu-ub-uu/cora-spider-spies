@@ -13,18 +13,18 @@
 	<name>spider-spies</name>
 
 	<properties>
-		<spider.version>7.3-SNAPSHOT</spider.version>
+		<spider.version>7.3.0</spider.version>
 		<logger.version>2.5.0</logger.version>
-		<coradata.version>7.2-SNAPSHOT</coradata.version>
-		<coradata-spies.version>1.0-SNAPSHOT</coradata-spies.version>
-		<json.version>3.3.0</json.version>
-		<storage.version>7.0-SNAPSHOT</storage.version>
-		<search.version>5.0-SNAPSHOT</search.version>
-		<bookkeeper.version>8.0-SNAPSHOT</bookkeeper.version>
-		<beefeater.version>3.7.0</beefeater.version>
-		<initialize.version>1.0-SNAPSHOT</initialize.version>
-		<testutils.version>1.5.0</testutils.version>
-		<testutils-spies.version>1.0-SNAPSHOT</testutils-spies.version>
+		<coradata.version>7.2.0</coradata.version>
+		<coradata-spies.version>1.0.0</coradata-spies.version>
+		<json.version>3.4.0</json.version>
+		<storage.version>7.0.0</storage.version>
+		<search.version>5.0.0</search.version>
+		<bookkeeper.version>8.0.0</bookkeeper.version>
+		<beefeater.version>3.8.0</beefeater.version>
+		<initialize.version>1.0.0</initialize.version>
+		<testutils.version>1.6.0</testutils.version>
+		<testutils-spies.version>1.0.0</testutils-spies.version>
 	</properties>
 
 	<scm>
