@@ -20,7 +20,7 @@ package se.uu.ub.cora.spider.spies;
 
 import java.util.function.Supplier;
 
-import se.uu.ub.cora.spider.data.SpiderInputStream;
+import se.uu.ub.cora.spider.data.ResourceInputStream;
 import se.uu.ub.cora.spider.record.Downloader;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
@@ -28,18 +28,18 @@ import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 public class DownloaderSpy implements Downloader {
 	public MethodCallRecorder MCR = new MethodCallRecorder();
 	public MethodReturnValues MRV = new MethodReturnValues();
-	private SpiderInputStream spiderInputStream = SpiderInputStream.withNameSizeInputStream(null, 0,
-			null, null);
+	private ResourceInputStream resourceInputStream = ResourceInputStream
+			.withNameSizeInputStream(null, 0, null, null);
 
 	public DownloaderSpy() {
 		MCR.useMRV(MRV);
 		MRV.setDefaultReturnValuesSupplier("download",
-				(Supplier<SpiderInputStream>) () -> spiderInputStream);
+				(Supplier<ResourceInputStream>) () -> resourceInputStream);
 	}
 
 	@Override
-	public SpiderInputStream download(String authToken, String type, String id, String resource) {
-		return (SpiderInputStream) MCR.addCallAndReturnFromMRV("authToken", authToken, "type", type,
-				"id", id, "resource", resource);
+	public ResourceInputStream download(String authToken, String type, String id, String resource) {
+		return (ResourceInputStream) MCR.addCallAndReturnFromMRV("authToken", authToken, "type",
+				type, "id", id, "resource", resource);
 	}
 }

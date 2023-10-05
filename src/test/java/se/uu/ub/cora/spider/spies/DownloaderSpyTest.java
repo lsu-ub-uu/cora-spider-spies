@@ -26,7 +26,7 @@ import java.util.function.Supplier;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import se.uu.ub.cora.spider.data.SpiderInputStream;
+import se.uu.ub.cora.spider.data.ResourceInputStream;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 import se.uu.ub.cora.testutils.spies.MCRSpy;
@@ -56,18 +56,19 @@ public class DownloaderSpyTest {
 	@Test
 	public void testDefaultReadRecord() throws Exception {
 		assertTrue(downloader.download("authToken", "type", "id",
-				"resource") instanceof SpiderInputStream);
+				"resource") instanceof ResourceInputStream);
 	}
 
 	@Test
 	public void testReadRecord() throws Exception {
 		downloader.MCR = MCRSpy;
-		SpiderInputStream spiderInputStream = SpiderInputStream.withNameSizeInputStream(null, 0,
+		ResourceInputStream resourceInputStream = ResourceInputStream.withNameSizeInputStream(null, 0,
 				null, null);
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
-				(Supplier<SpiderInputStream>) () -> spiderInputStream);
+				(Supplier<ResourceInputStream>) () -> resourceInputStream);
 
-		SpiderInputStream retunedValue = downloader.download("authToken", "type", "id", "resource");
+		ResourceInputStream retunedValue = downloader.download("authToken", "type", "id",
+				"resource");
 
 		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
 		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "authToken", "authToken");
