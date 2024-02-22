@@ -10,4 +10,5 @@ module se.uu.ub.cora.spider.spies {
 	requires transitive se.uu.ub.cora.testutils;
 
 	exports se.uu.ub.cora.spider.spies;
+	exports se.uu.ub.cora.spider.spies.binary.iiif;
 }

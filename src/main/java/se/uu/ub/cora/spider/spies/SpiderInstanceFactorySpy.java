@@ -31,6 +31,7 @@ import se.uu.ub.cora.spider.record.RecordReader;
 import se.uu.ub.cora.spider.record.RecordSearcher;
 import se.uu.ub.cora.spider.record.RecordUpdater;
 import se.uu.ub.cora.spider.record.RecordValidator;
+import se.uu.ub.cora.spider.spies.binary.iiif.IiifReaderSpy;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 
@@ -53,6 +54,7 @@ public class SpiderInstanceFactorySpy implements SpiderInstanceFactory {
 		MRV.setDefaultReturnValuesSupplier("factorRecordSearcher", RecordSearcherSpy::new);
 		MRV.setDefaultReturnValuesSupplier("factorRecordValidator", RecordValidatorSpy::new);
 		MRV.setDefaultReturnValuesSupplier("factorRecordListIndexer", RecordListIndexerSpy::new);
+		MRV.setDefaultReturnValuesSupplier("factorIiifReader", IiifReaderSpy::new);
 	}
 
 	@Override
@@ -117,7 +119,6 @@ public class SpiderInstanceFactorySpy implements SpiderInstanceFactory {
 
 	@Override
 	public IiifReader factorIiifReader() {
-		// TODO Auto-generated method stub
-		return null;
+		return (IiifReader) MCR.addCallAndReturnFromMRV();
 	}
 }

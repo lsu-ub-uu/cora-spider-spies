@@ -27,6 +27,7 @@ import org.testng.annotations.Test;
 
 import se.uu.ub.cora.spider.record.IncomingLinksReader;
 import se.uu.ub.cora.spider.record.RecordListReader;
+import se.uu.ub.cora.spider.spies.binary.iiif.IiifReaderSpy;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 import se.uu.ub.cora.testutils.spies.MCRSpy;
@@ -253,4 +254,19 @@ public class SpiderInstanceFactorySpyTest {
 		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
 	}
 
+	@Test
+	public void testDefaultFactorIffReader() throws Exception {
+		assertTrue(instanceFactory.factorIiifReader() instanceof IiifReaderSpy);
+	}
+
+	@Test
+	public void testFactorIffReader() throws Exception {
+		instanceFactory.MCR = MCRSpy;
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, IiifReaderSpy::new);
+
+		var returnedValue = instanceFactory.factorIiifReader();
+
+		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
+	}
 }
