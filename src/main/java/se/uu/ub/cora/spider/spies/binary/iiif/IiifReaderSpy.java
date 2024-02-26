@@ -30,7 +30,7 @@ public class IiifReaderSpy implements IiifReader {
 
 	public IiifReaderSpy() {
 		MCR.useMRV(MRV);
-		MRV.setDefaultReturnValuesSupplier("readyBinary",
+		MRV.setDefaultReturnValuesSupplier("readImage",
 				() -> ResourceInputStream.withNameSizeInputStream(null, 0, null, null));
 	}
 
