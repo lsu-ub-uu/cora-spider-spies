@@ -33,7 +33,7 @@ public class IiifReaderSpyTest {
 
 	private static final String ADD_CALL = "addCall";
 	private static final String ADD_CALL_AND_RETURN_FROM_MRV = "addCallAndReturnFromMRV";
-	IiifReaderSpy iffReader;
+	IiifImageReaderSpy iffReader;
 	private MCRSpy MCRSpy;
 	private MethodCallRecorder mcrForSpy;
 
@@ -41,7 +41,7 @@ public class IiifReaderSpyTest {
 	public void beforeMethod() {
 		MCRSpy = new MCRSpy();
 		mcrForSpy = MCRSpy.MCR;
-		iffReader = new IiifReaderSpy();
+		iffReader = new IiifImageReaderSpy();
 	}
 
 	@Test

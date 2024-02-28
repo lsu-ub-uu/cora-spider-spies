@@ -18,26 +18,29 @@
  */
 package se.uu.ub.cora.spider.spies.binary.iiif;
 
-import se.uu.ub.cora.spider.binary.iiif.IiifReader;
-import se.uu.ub.cora.spider.data.ResourceInputStream;
+import java.util.List;
+import java.util.Map;
+
+import se.uu.ub.cora.spider.binary.iiif.IiifImageReader;
+import se.uu.ub.cora.spider.binary.iiif.IiifImageResponse;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 
-public class IiifReaderSpy implements IiifReader {
+public class IiifImageReaderSpy implements IiifImageReader {
 
 	public MethodCallRecorder MCR = new MethodCallRecorder();
 	public MethodReturnValues MRV = new MethodReturnValues();
 
-	public IiifReaderSpy() {
+	public IiifImageReaderSpy() {
 		MCR.useMRV(MRV);
-		MRV.setDefaultReturnValuesSupplier("readImage",
-				() -> ResourceInputStream.withNameSizeInputStream(null, 0, null, null));
+		MRV.setDefaultReturnValuesSupplier("readIiif",
+				() -> new IiifImageResponse(200, Map.of("content-type", "plain/text"), "OK"));
 	}
 
 	@Override
-	public ResourceInputStream readImage(String identifier, String region, String size,
-			String rotation, String quality, String format) {
-		return (ResourceInputStream) MCR.addCallAndReturnFromMRV("identifier", identifier, "region",
-				region, "size", size, "rotation", rotation, "quality", quality, "format", format);
+	public IiifImageResponse readIiif(String identifier, String requestedUri, String method,
+			Map<String, List<Object>> headers) {
+		return (IiifImageResponse) MCR.addCallAndReturnFromMRV("identifier", identifier,
+				"requestedUri", requestedUri, "method", method, "headers", headers);
 	}
 }
