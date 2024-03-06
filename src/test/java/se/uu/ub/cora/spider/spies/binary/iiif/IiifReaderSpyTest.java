@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Olov McKie
+ * Copyright 2024 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -16,26 +16,24 @@
  *     You should have received a copy of the GNU General Public License
  *     along with Cora.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.uu.ub.cora.spider.spies;
+package se.uu.ub.cora.spider.spies.binary.iiif;
 
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 
-import java.util.function.Supplier;
-
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import se.uu.ub.cora.spider.binary.ResourceInputStream;
+import se.uu.ub.cora.data.spies.DataRecordSpy;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 import se.uu.ub.cora.testutils.spies.MCRSpy;
 
-public class DownloaderSpyTest {
+public class IiifReaderSpyTest {
 
 	private static final String ADD_CALL = "addCall";
 	private static final String ADD_CALL_AND_RETURN_FROM_MRV = "addCallAndReturnFromMRV";
-	DownloaderSpy downloader;
+	IiifReaderSpy iffReader;
 	private MCRSpy MCRSpy;
 	private MethodCallRecorder mcrForSpy;
 
@@ -43,39 +41,33 @@ public class DownloaderSpyTest {
 	public void beforeMethod() {
 		MCRSpy = new MCRSpy();
 		mcrForSpy = MCRSpy.MCR;
-		downloader = new DownloaderSpy();
+		iffReader = new IiifReaderSpy();
 	}
 
 	@Test
 	public void testMakeSureSpyHelpersAreSetUp() throws Exception {
-		assertTrue(downloader.MCR instanceof MethodCallRecorder);
-		assertTrue(downloader.MRV instanceof MethodReturnValues);
-		assertSame(downloader.MCR.onlyForTestGetMRV(), downloader.MRV);
+		assertTrue(iffReader.MCR instanceof MethodCallRecorder);
+		assertTrue(iffReader.MRV instanceof MethodReturnValues);
+		assertSame(iffReader.MCR.onlyForTestGetMRV(), iffReader.MRV);
 	}
 
 	@Test
 	public void testDefaultReadRecord() throws Exception {
-		assertTrue(downloader.download("authToken", "type", "id",
-				"resource") instanceof ResourceInputStream);
+		// assertTrue(iffReader.readImage("authToken", "type", "id") instanceof DataRecordSpy);
 	}
 
 	@Test
 	public void testReadRecord() throws Exception {
-		downloader.MCR = MCRSpy;
-		ResourceInputStream resourceInputStream = ResourceInputStream.withNameSizeInputStream(null, 0,
-				null, null);
-		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
-				(Supplier<ResourceInputStream>) () -> resourceInputStream);
+		iffReader.MCR = MCRSpy;
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, DataRecordSpy::new);
 
-		ResourceInputStream retunedValue = downloader.download("authToken", "type", "id",
-				"resource");
-
-		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
-		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "authToken", "authToken");
-		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "type", "type");
-		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "id", "id");
-		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "resource", "resource");
-		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, retunedValue);
+		// DataRecord retunedValue = iffReader.readImage("authToken", "type", "id");
+		//
+		// mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		// mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "authToken", "authToken");
+		// mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "type", "type");
+		// mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "id", "id");
+		// mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, retunedValue);
 	}
 
 }

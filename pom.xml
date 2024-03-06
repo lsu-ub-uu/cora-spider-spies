@@ -13,7 +13,7 @@
 	<name>spider-spies</name>
 
 	<properties>
-		<spider.version>8.1.0</spider.version>
+		<spider.version>8.2-SNAPSHOT</spider.version>
 		<logger.version>2.10.0</logger.version>
 		<coradata.version>8.0.0</coradata.version>
 		<coradata-spies.version>1.6.0</coradata-spies.version>
@@ -25,7 +25,8 @@
 		<initialize.version>1.5.0</initialize.version>
 		<testutils.version>1.11.0</testutils.version>
 		<testutils-spies.version>1.5.0</testutils-spies.version>
-		<contentanalyzer.version>1.0.0</contentanalyzer.version>
+		<messaging.version>3.0-SNAPSHOT</messaging.version>
+		<binary.version>2.0-SNAPSHOT</binary.version>
 	</properties>
 
 	<scm>
@@ -115,8 +116,14 @@
 		</dependency>
 		<dependency>
 			<groupId>se.uu.ub.cora</groupId>
+			<artifactId>messaging</artifactId>
+			<version>${messaging.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>se.uu.ub.cora</groupId>
 			<artifactId>contentanalyzer</artifactId>
-			<version>${contentanalyzer.version}</version>
+			<version>${binary.version}</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

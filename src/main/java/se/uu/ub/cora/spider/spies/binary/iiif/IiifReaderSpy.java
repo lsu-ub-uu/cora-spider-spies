@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Olov McKie
+ * Copyright 2024 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -16,30 +16,30 @@
  *     You should have received a copy of the GNU General Public License
  *     along with Cora.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.uu.ub.cora.spider.spies;
+package se.uu.ub.cora.spider.spies.binary.iiif;
 
-import java.util.function.Supplier;
+import java.util.Map;
 
-import se.uu.ub.cora.spider.binary.Downloader;
-import se.uu.ub.cora.spider.binary.ResourceInputStream;
+import se.uu.ub.cora.spider.binary.iiif.IiifReader;
+import se.uu.ub.cora.spider.binary.iiif.IiifResponse;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 
-public class DownloaderSpy implements Downloader {
+public class IiifReaderSpy implements IiifReader {
+
 	public MethodCallRecorder MCR = new MethodCallRecorder();
 	public MethodReturnValues MRV = new MethodReturnValues();
-	private ResourceInputStream resourceInputStream = ResourceInputStream
-			.withNameSizeInputStream(null, 0, null, null);
 
-	public DownloaderSpy() {
+	public IiifReaderSpy() {
 		MCR.useMRV(MRV);
-		MRV.setDefaultReturnValuesSupplier("download",
-				(Supplier<ResourceInputStream>) () -> resourceInputStream);
+		MRV.setDefaultReturnValuesSupplier("readIiif",
+				() -> new IiifResponse(200, Map.of("content-type", "plain/text"), "body"));
 	}
 
 	@Override
-	public ResourceInputStream download(String authToken, String type, String id, String resource) {
-		return (ResourceInputStream) MCR.addCallAndReturnFromMRV("authToken", authToken, "type",
-				type, "id", id, "resource", resource);
+	public IiifResponse readIiif(String identifier, String requestedUri, String method,
+			Map<String, String> headers) {
+		return (IiifResponse) MCR.addCallAndReturnFromMRV("identifier", identifier, "requestedUri",
+				requestedUri, "method", method, "headers", headers);
 	}
 }
