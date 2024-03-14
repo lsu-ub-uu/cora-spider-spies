@@ -18,13 +18,17 @@
  */
 package se.uu.ub.cora.spider.spies.binary.iiif;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
+
+import java.util.Collections;
+import java.util.Map;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import se.uu.ub.cora.data.spies.DataRecordSpy;
+import se.uu.ub.cora.spider.binary.iiif.IiifResponse;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 import se.uu.ub.cora.testutils.spies.MCRSpy;
@@ -53,21 +57,33 @@ public class IiifReaderSpyTest {
 
 	@Test
 	public void testDefaultReadRecord() throws Exception {
-		// assertTrue(iffReader.readImage("authToken", "type", "id") instanceof DataRecordSpy);
+		IiifResponse iiifResponse = iffReader.readIiif("someIdentifier", "someRequestUri",
+				"someMethods", Collections.emptyMap());
+
+		assertEquals(iiifResponse.status(), 200);
+		assertEquals(iiifResponse.headers().get("content-type"), "plain/text");
+		assertEquals(iiifResponse.body(), "body");
 	}
 
 	@Test
 	public void testReadRecord() throws Exception {
 		iffReader.MCR = MCRSpy;
-		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, DataRecordSpy::new);
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
+				() -> new IiifResponse(418, Map.of("someHeaderKey", "someHeaderValue"),
+						"someBody"));
 
-		// DataRecord retunedValue = iffReader.readImage("authToken", "type", "id");
-		//
-		// mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
-		// mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "authToken", "authToken");
-		// mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "type", "type");
-		// mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "id", "id");
-		// mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, retunedValue);
+		IiifResponse iiifResponse = iffReader.readIiif("someIdentifier", "someRequestUri",
+				"someMethods", Collections.emptyMap());
+
+		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "identifier", "someIdentifier");
+		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "requestedUri",
+				"someRequestUri");
+		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "method", "someMethods");
+		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "headers",
+				Collections.emptyMap());
+
+		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, iiifResponse);
 	}
 
 }
