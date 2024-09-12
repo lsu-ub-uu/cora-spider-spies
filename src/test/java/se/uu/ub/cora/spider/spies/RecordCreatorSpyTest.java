@@ -25,7 +25,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import se.uu.ub.cora.data.DataRecord;
-import se.uu.ub.cora.data.spies.DataGroupSpy;
+import se.uu.ub.cora.data.spies.DataRecordGroupSpy;
 import se.uu.ub.cora.data.spies.DataRecordSpy;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
@@ -63,7 +63,7 @@ public class RecordCreatorSpyTest {
 		recordCreator.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, DataRecordSpy::new);
 
-		DataGroupSpy recordGroup = new DataGroupSpy();
+		DataRecordGroupSpy recordGroup = new DataRecordGroupSpy();
 		DataRecord retunedValue = recordCreator.createAndStoreRecord("authToken", "type",
 				recordGroup);
 
