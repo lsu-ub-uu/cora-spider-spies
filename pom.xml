@@ -13,7 +13,7 @@
 	<name>spider-spies</name>
 
 	<properties>
-		<spider.version>9.0-SNAPSHOT</spider.version>
+		<spider.version>9.0.0</spider.version>
 		<logger.version>2.10.0</logger.version>
 		<coradata.version>10.0.0</coradata.version>
 		<coradata-spies.version>2.0.0</coradata-spies.version>
