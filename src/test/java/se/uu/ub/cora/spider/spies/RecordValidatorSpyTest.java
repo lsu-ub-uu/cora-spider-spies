@@ -26,6 +26,7 @@ import org.testng.annotations.Test;
 
 import se.uu.ub.cora.data.DataRecord;
 import se.uu.ub.cora.data.spies.DataGroupSpy;
+import se.uu.ub.cora.data.spies.DataRecordGroupSpy;
 import se.uu.ub.cora.data.spies.DataRecordSpy;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
@@ -64,7 +65,7 @@ public class RecordValidatorSpyTest {
 		recordValidator.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, DataRecordSpy::new);
 		DataGroupSpy validationRecord = new DataGroupSpy();
-		DataGroupSpy recordToValidate = new DataGroupSpy();
+		DataRecordGroupSpy recordToValidate = new DataRecordGroupSpy();
 
 		DataRecord retunedValue = recordValidator.validateRecord("authToken", "recordType",
 				validationRecord, recordToValidate);
