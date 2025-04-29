@@ -47,19 +47,19 @@ public class SpiderInstanceFactorySpyTest {
 	}
 
 	@Test
-	public void testMakeSureSpyHelpersAreSetUp() throws Exception {
+	public void testMakeSureSpyHelpersAreSetUp() {
 		assertTrue(instanceFactory.MCR instanceof MethodCallRecorder);
 		assertTrue(instanceFactory.MRV instanceof MethodReturnValues);
 		assertSame(instanceFactory.MCR.onlyForTestGetMRV(), instanceFactory.MRV);
 	}
 
 	@Test
-	public void testDefaultDependencyProviderClassName() throws Exception {
+	public void testDefaultDependencyProviderClassName() {
 		assertTrue(instanceFactory.getDependencyProviderClassName() instanceof String);
 	}
 
 	@Test
-	public void testGetDependencyProviderClassName() throws Exception {
+	public void testGetDependencyProviderClassName() {
 		instanceFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, String::new);
 
@@ -70,12 +70,12 @@ public class SpiderInstanceFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorRecordReader() throws Exception {
+	public void testDefaultFactorRecordReader() {
 		assertTrue(instanceFactory.factorRecordReader() instanceof RecordReaderSpy);
 	}
 
 	@Test
-	public void testFactorRecordReader() throws Exception {
+	public void testFactorRecordReader() {
 		instanceFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				RecordReaderSpy::new);
@@ -87,12 +87,30 @@ public class SpiderInstanceFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorIncomingLinksReader() throws Exception {
+	public void testDefaultFactorDecoratedRecordReader() {
+		assertTrue(
+				instanceFactory.factorDecoratedRecordReader() instanceof DecoratedRecordReaderSpy);
+	}
+
+	@Test
+	public void testFactorDecoratedRecordReader() {
+		instanceFactory.MCR = MCRSpy;
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
+				RecordReaderSpy::new);
+
+		var returnedValue = instanceFactory.factorRecordReader();
+
+		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
+	}
+
+	@Test
+	public void testDefaultFactorIncomingLinksReader() {
 		assertTrue(instanceFactory.factorIncomingLinksReader() instanceof IncomingLinksReader);
 	}
 
 	@Test
-	public void testFactorIncomingLinksReader() throws Exception {
+	public void testFactorIncomingLinksReader() {
 		instanceFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				IncomingLinksReaderSpy::new);
@@ -104,12 +122,12 @@ public class SpiderInstanceFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorRecordListReader() throws Exception {
+	public void testDefaultFactorRecordListReader() {
 		assertTrue(instanceFactory.factorRecordListReader() instanceof RecordListReader);
 	}
 
 	@Test
-	public void testFactorRecordListReader() throws Exception {
+	public void testFactorRecordListReader() {
 		instanceFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				RecordListReaderSpy::new);
@@ -121,12 +139,12 @@ public class SpiderInstanceFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorRecordCreator() throws Exception {
+	public void testDefaultFactorRecordCreator() {
 		assertTrue(instanceFactory.factorRecordCreator() instanceof RecordCreatorSpy);
 	}
 
 	@Test
-	public void testFactorRecordCreator() throws Exception {
+	public void testFactorRecordCreator() {
 		instanceFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				RecordCreatorSpy::new);
@@ -138,12 +156,12 @@ public class SpiderInstanceFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorRecordUpdater() throws Exception {
+	public void testDefaultFactorRecordUpdater() {
 		assertTrue(instanceFactory.factorRecordUpdater() instanceof RecordUpdaterSpy);
 	}
 
 	@Test
-	public void testFactorRecordUpdater() throws Exception {
+	public void testFactorRecordUpdater() {
 		instanceFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				RecordUpdaterSpy::new);
@@ -155,12 +173,12 @@ public class SpiderInstanceFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorRecordDeleter() throws Exception {
+	public void testDefaultFactorRecordDeleter() {
 		assertTrue(instanceFactory.factorRecordDeleter() instanceof RecordDeleterSpy);
 	}
 
 	@Test
-	public void testFactorRecordDeleter() throws Exception {
+	public void testFactorRecordDeleter() {
 		instanceFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				RecordDeleterSpy::new);
@@ -172,12 +190,12 @@ public class SpiderInstanceFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorUploader() throws Exception {
+	public void testDefaultFactorUploader() {
 		assertTrue(instanceFactory.factorUploader() instanceof UploaderSpy);
 	}
 
 	@Test
-	public void testFactorUploader() throws Exception {
+	public void testFactorUploader() {
 		instanceFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, UploaderSpy::new);
 
@@ -188,12 +206,12 @@ public class SpiderInstanceFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorDownloader() throws Exception {
+	public void testDefaultFactorDownloader() {
 		assertTrue(instanceFactory.factorDownloader() instanceof DownloaderSpy);
 	}
 
 	@Test
-	public void testFactorDownloader() throws Exception {
+	public void testFactorDownloader() {
 		instanceFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, DownloaderSpy::new);
 
@@ -204,12 +222,12 @@ public class SpiderInstanceFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorRecordSearcher() throws Exception {
+	public void testDefaultFactorRecordSearcher() {
 		assertTrue(instanceFactory.factorRecordSearcher() instanceof RecordSearcherSpy);
 	}
 
 	@Test
-	public void testFactorRecordSearcher() throws Exception {
+	public void testFactorRecordSearcher() {
 		instanceFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				RecordSearcherSpy::new);
@@ -221,12 +239,12 @@ public class SpiderInstanceFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorRecordValidator() throws Exception {
+	public void testDefaultFactorRecordValidator() {
 		assertTrue(instanceFactory.factorRecordValidator() instanceof RecordValidatorSpy);
 	}
 
 	@Test
-	public void testFactorRecordValidator() throws Exception {
+	public void testFactorRecordValidator() {
 		instanceFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				RecordValidatorSpy::new);
@@ -238,12 +256,12 @@ public class SpiderInstanceFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorRecordListIndexer() throws Exception {
+	public void testDefaultFactorRecordListIndexer() {
 		assertTrue(instanceFactory.factorRecordListIndexer() instanceof RecordListIndexerSpy);
 	}
 
 	@Test
-	public void testFactorRecordListIndexer() throws Exception {
+	public void testFactorRecordListIndexer() {
 		instanceFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				RecordListIndexerSpy::new);
@@ -255,12 +273,12 @@ public class SpiderInstanceFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorIffReader() throws Exception {
+	public void testDefaultFactorIffReader() {
 		assertTrue(instanceFactory.factorIiifReader() instanceof IiifReaderSpy);
 	}
 
 	@Test
-	public void testFactorIffReader() throws Exception {
+	public void testFactorIffReader() {
 		instanceFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, IiifReaderSpy::new);
 
