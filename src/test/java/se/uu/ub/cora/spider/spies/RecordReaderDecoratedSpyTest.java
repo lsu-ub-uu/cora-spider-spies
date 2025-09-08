@@ -31,11 +31,11 @@ import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 import se.uu.ub.cora.testutils.spies.MCRSpy;
 
-public class DecoratedRecordReaderSpyTest {
+public class RecordReaderDecoratedSpyTest {
 
 	private static final String ADD_CALL = "addCall";
 	private static final String ADD_CALL_AND_RETURN_FROM_MRV = "addCallAndReturnFromMRV";
-	DecoratedRecordReaderSpy decoratedRecordReader;
+	RecordReaderDecoratedSpy decoratedRecordReader;
 	private MCRSpy MCRSpy;
 	private MethodCallRecorder mcrForSpy;
 
@@ -43,7 +43,7 @@ public class DecoratedRecordReaderSpyTest {
 	public void beforeMethod() {
 		MCRSpy = new MCRSpy();
 		mcrForSpy = MCRSpy.MCR;
-		decoratedRecordReader = new DecoratedRecordReaderSpy();
+		decoratedRecordReader = new RecordReaderDecoratedSpy();
 	}
 
 	@Test

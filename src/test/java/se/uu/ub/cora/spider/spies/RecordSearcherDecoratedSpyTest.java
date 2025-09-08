@@ -27,14 +27,14 @@ import org.testng.annotations.Test;
 import se.uu.ub.cora.data.DataList;
 import se.uu.ub.cora.data.spies.DataGroupSpy;
 import se.uu.ub.cora.data.spies.DataListSpy;
-import se.uu.ub.cora.spider.record.RecordSearcher;
+import se.uu.ub.cora.spider.record.RecordSearcherDecorated;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 import se.uu.ub.cora.testutils.spies.MCRSpy;
 
-public class RecordSearcherSpyTest {
+public class RecordSearcherDecoratedSpyTest {
 	private static final String ADD_CALL_AND_RETURN_FROM_MRV = "addCallAndReturnFromMRV";
-	RecordSearcherSpy recordSearcher;
+	RecordSearcherDecoratedSpy recordSearcher;
 	private MCRSpy MCRSpy;
 	private MethodCallRecorder mcrForSpy;
 
@@ -42,12 +42,12 @@ public class RecordSearcherSpyTest {
 	public void beforeMethod() {
 		MCRSpy = new MCRSpy();
 		mcrForSpy = MCRSpy.MCR;
-		recordSearcher = new RecordSearcherSpy();
+		recordSearcher = new RecordSearcherDecoratedSpy();
 	}
 
 	@Test
 	public void testName() {
-		assertTrue(recordSearcher instanceof RecordSearcher);
+		assertTrue(recordSearcher instanceof RecordSearcherDecorated);
 	}
 
 	@Test
@@ -59,7 +59,8 @@ public class RecordSearcherSpyTest {
 
 	@Test
 	public void testDefaultSearchRecord() {
-		assertTrue(recordSearcher.search("authToken", "searchId", null) instanceof DataListSpy);
+		assertTrue(recordSearcher.searchDecorated("authToken", "searchId",
+				null) instanceof DataListSpy);
 	}
 
 	@Test
@@ -68,7 +69,7 @@ public class RecordSearcherSpyTest {
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, DataListSpy::new);
 		DataGroupSpy searchData = new DataGroupSpy();
 
-		DataList retunedValue = recordSearcher.search("authToken", "searchId", searchData);
+		DataList retunedValue = recordSearcher.searchDecorated("authToken", "searchId", searchData);
 
 		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
 		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "authToken", "authToken");
