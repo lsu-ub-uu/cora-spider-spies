@@ -33,7 +33,6 @@ import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 import se.uu.ub.cora.testutils.spies.MCRSpy;
 
 public class SpiderInstanceFactorySpyTest {
-	private static final String ADD_CALL = "addCall";
 	private static final String ADD_CALL_AND_RETURN_FROM_MRV = "addCallAndReturnFromMRV";
 	SpiderInstanceFactorySpy instanceFactory;
 	private MCRSpy MCRSpy;
@@ -89,16 +88,16 @@ public class SpiderInstanceFactorySpyTest {
 	@Test
 	public void testDefaultFactorDecoratedRecordReader() {
 		assertTrue(
-				instanceFactory.factorDecoratedRecordReader() instanceof DecoratedRecordReaderSpy);
+				instanceFactory.factorRecordReaderDecorated() instanceof RecordReaderDecoratedSpy);
 	}
 
 	@Test
-	public void testFactorDecoratedRecordReader() {
+	public void testFactorRecordReaderDecorated() {
 		instanceFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
-				RecordReaderSpy::new);
+				RecordReaderDecoratedSpy::new);
 
-		var returnedValue = instanceFactory.factorRecordReader();
+		var returnedValue = instanceFactory.factorRecordReaderDecorated();
 
 		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
 		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);

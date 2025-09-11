@@ -20,15 +20,15 @@ package se.uu.ub.cora.spider.spies;
 
 import se.uu.ub.cora.data.DataRecord;
 import se.uu.ub.cora.data.spies.DataRecordSpy;
-import se.uu.ub.cora.spider.record.DecoratedRecordReader;
+import se.uu.ub.cora.spider.record.RecordReaderDecorated;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 
-public class DecoratedRecordReaderSpy implements DecoratedRecordReader {
+public class RecordReaderDecoratedSpy implements RecordReaderDecorated {
 	public MethodCallRecorder MCR = new MethodCallRecorder();
 	public MethodReturnValues MRV = new MethodReturnValues();
 
-	public DecoratedRecordReaderSpy() {
+	public RecordReaderDecoratedSpy() {
 		MCR.useMRV(MRV);
 		MRV.setDefaultReturnValuesSupplier("readDecoratedRecord", DataRecordSpy::new);
 	}

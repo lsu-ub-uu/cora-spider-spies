@@ -27,13 +27,12 @@ import org.testng.annotations.Test;
 import se.uu.ub.cora.data.DataList;
 import se.uu.ub.cora.data.spies.DataGroupSpy;
 import se.uu.ub.cora.data.spies.DataListSpy;
+import se.uu.ub.cora.spider.record.RecordSearcher;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 import se.uu.ub.cora.testutils.spies.MCRSpy;
 
 public class RecordSearcherSpyTest {
-
-	private static final String ADD_CALL = "addCall";
 	private static final String ADD_CALL_AND_RETURN_FROM_MRV = "addCallAndReturnFromMRV";
 	RecordSearcherSpy recordSearcher;
 	private MCRSpy MCRSpy;
@@ -47,19 +46,24 @@ public class RecordSearcherSpyTest {
 	}
 
 	@Test
-	public void testMakeSureSpyHelpersAreSetUp() throws Exception {
+	public void testName() {
+		assertTrue(recordSearcher instanceof RecordSearcher);
+	}
+
+	@Test
+	public void testMakeSureSpyHelpersAreSetUp() {
 		assertTrue(recordSearcher.MCR instanceof MethodCallRecorder);
 		assertTrue(recordSearcher.MRV instanceof MethodReturnValues);
 		assertSame(recordSearcher.MCR.onlyForTestGetMRV(), recordSearcher.MRV);
 	}
 
 	@Test
-	public void testDefaultReadRecord() throws Exception {
+	public void testDefaultSearchRecord() {
 		assertTrue(recordSearcher.search("authToken", "searchId", null) instanceof DataListSpy);
 	}
 
 	@Test
-	public void testReadRecord() throws Exception {
+	public void testSearchRecord() {
 		recordSearcher.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, DataListSpy::new);
 		DataGroupSpy searchData = new DataGroupSpy();
