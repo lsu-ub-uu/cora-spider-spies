@@ -1,6 +1,6 @@
 /*
  * Copyright 2022 Olov McKie
- * Copyright 2022 Uppsala University Library
+ * Copyright 2022, 2026 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -48,20 +48,20 @@ public class RecordUpdaterSpyTest {
 	}
 
 	@Test
-	public void testMakeSureSpyHelpersAreSetUp() throws Exception {
+	public void testMakeSureSpyHelpersAreSetUp() {
 		assertTrue(recordUpdater.MCR instanceof MethodCallRecorder);
 		assertTrue(recordUpdater.MRV instanceof MethodReturnValues);
 		assertSame(recordUpdater.MCR.onlyForTestGetMRV(), recordUpdater.MRV);
 	}
 
 	@Test
-	public void testDefaultUpdateRecord() throws Exception {
+	public void testDefaultUpdateRecord() {
 		assertTrue(recordUpdater.updateRecord("authToken", "type", "id",
 				null) instanceof DataRecordSpy);
 	}
 
 	@Test
-	public void testUpdateRecord() throws Exception {
+	public void testUpdateRecord() {
 		recordUpdater.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, DataRecordSpy::new);
 		DataRecordGroupSpy recordGroup = new DataRecordGroupSpy();
@@ -74,6 +74,15 @@ public class RecordUpdaterSpyTest {
 		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "type", "type");
 		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "id", "id");
 		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, retunedValue);
+	}
+
+	@Test
+	public void testUseUploadAsActionInSecurityChecks() {
+		recordUpdater.MCR = MCRSpy;
+
+		recordUpdater.useUploadAsActionInSecurityChecks();
+
+		mcrForSpy.assertMethodWasCalled(ADD_CALL);
 	}
 
 }
